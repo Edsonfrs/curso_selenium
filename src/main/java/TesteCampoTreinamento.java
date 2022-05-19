@@ -1,6 +1,7 @@
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -77,7 +78,7 @@ public class TesteCampoTreinamento {
 	}
 
 	@Test
-	public void deveVerificarvaloresCombo() {
+	public void deveVerificarValoresCombo() {
 		WebDriver driver = new ChromeDriver();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
@@ -101,5 +102,80 @@ public class TesteCampoTreinamento {
 		driver.quit();
 	}
 	
+	@Test
+	public void deveVerificarValoresDoComboMultiplo() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
+		Select combo = new Select(element);
+		combo.selectByVisibleText("Natacao");
+		combo.selectByVisibleText("Corrida");
+		combo.selectByVisibleText("O que eh esporte?");
+		
+		List<WebElement> allSelectOptions = combo.getAllSelectedOptions();
+		Assert.assertEquals(3, allSelectOptions.size());
+		
+		
+		combo.deselectByVisibleText("Corrida");
+		allSelectOptions = combo.getAllSelectedOptions();
+		Assert.assertEquals(2, allSelectOptions.size());
+		
+		driver.quit();
+
+	}
+	
+	@Test
+	public void deveInteragirComBotoes() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		driver.findElement(By.id("buttonSimple")).click();
+		String texto = driver.findElement(By.id("buttonSimple")).getAttribute("value");
+
+		Assert.assertEquals("Obrigado!", texto);
+		
+		driver.quit();
+		
+	}
+	
+	@Test
+	public void deveInteragirComLink() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		driver.findElement(By.linkText("Voltar")).click();
+		String resultado = driver.findElement(By.id("resultado")).getText();
+		
+		Assert.assertEquals("Voltou!", resultado);
+		//Assert.fail();
+		
+		driver.quit();
+		
+	}
+	
+	@Test
+	public void deveBuscarTextosNaPaginaFormaUm() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		String pagina = driver.findElement(By.tagName("body")).getText(); 
+		
+		Assert.assertTrue(pagina.contains("Campo de Treinamento"));
+		
+		
+		driver.quit();
+		
+	}
+	
+	@Test
+	public void deveBuscarTextosNaPaginaFormaDois() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		String pagina = driver.findElement(By.tagName("h3")).getText(); 
+		String pagina2 = driver.findElement(By.className("facilAchar")).getText();
+		
+		Assert.assertEquals("Campo de Treinamento", pagina);
+		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", pagina2);
+		
+		
+		driver.quit();
+	}
 
 }
