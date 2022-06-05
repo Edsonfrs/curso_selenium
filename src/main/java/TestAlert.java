@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -8,12 +10,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TestAlert {
 	
-	@Test
-	public void deveInteragirComAlertSimples() {
-		
-		WebDriver driver = new ChromeDriver();
+	private WebDriver driver;
+	
+	@Before	
+	public void inicializa() {
+		driver = new ChromeDriver();
 		driver.manage().window().setSize(new Dimension(600, 334));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+		
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	
+	
+	@Test
+	public void deveInteragirComAlertSimples() {
+
 		driver.findElement(By.id("alert")).click();
 		Alert alert = driver.switchTo().alert();
 		String mensagem = alert.getText();	
@@ -22,16 +38,12 @@ public class TestAlert {
 		alert.accept();
 		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys(mensagem);
-		
-		driver.quit();
+
 	}
 	
 	@Test
 	public void deveInteragirComAlertConfirmOk() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(600, 334));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+
 		driver.findElement(By.id("confirm")).click();
 		Alert alert = driver.switchTo().alert();
 			
@@ -39,16 +51,12 @@ public class TestAlert {
 		String mensagem = alert.getText();
 
 		Assert.assertEquals("Confirmado", mensagem);
-				
-		driver.quit();
+
 	}
 	
 	@Test
 	public void deveInteragirComAlertConfirmCancel() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(600, 334));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+
 		driver.findElement(By.id("confirm")).click();
 		Alert alert = driver.switchTo().alert();
 
@@ -56,16 +64,11 @@ public class TestAlert {
 		String mensagem = alert.getText();
 		
 		Assert.assertEquals("Negado", mensagem);
-		
-		driver.quit();
+
 	}
 	
 	@Test
 	public void deveInteragirComPromptOk() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(600, 334));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
 		
 		driver.findElement(By.id("prompt")).click();
 		Alert alert = driver.switchTo().alert();
@@ -79,15 +82,10 @@ public class TestAlert {
 		
 		Assert.assertEquals(":D", alert.getText());
 
-		driver.quit();
 	}
 	
 	@Test
 	public void deveInteragirComPromptCancel() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(600, 334));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
 		
 		driver.findElement(By.id("prompt")).click();
 		Alert alert = driver.switchTo().alert();
@@ -101,7 +99,6 @@ public class TestAlert {
 		
 		Assert.assertEquals(":(", alert.getText());
 
-		driver.quit();
 	}
 
 

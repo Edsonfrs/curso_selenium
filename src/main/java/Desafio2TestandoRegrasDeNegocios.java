@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -8,28 +10,33 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class Desafio2TestandoRegrasDeNegocios {
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa() {
+		driver = new ChromeDriver();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
 	
 	@Test
 	public void deveTestarRegraDoCampoNome() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
-		
+
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		Alert alert = driver.switchTo().alert();
 		String msg = alert.getText();	
 		
 		Assert.assertEquals("Nome eh obrigatorio", msg);
 
-		driver.quit();
 	}
 	
 	@Test
 	public void deveTestarRegraDoCampoSobreNome() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
-		
+
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Washington");
 		
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
@@ -38,15 +45,11 @@ public class Desafio2TestandoRegrasDeNegocios {
 		
 		Assert.assertEquals("Sobrenome eh obrigatorio", msg);
 
-		driver.quit();
 	}
 	
 	@Test
 	public void deveTestarRegraDoCampoSexo() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
-		
+
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Arthur");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Conan Doyle");
 		
@@ -56,14 +59,10 @@ public class Desafio2TestandoRegrasDeNegocios {
 		
 		Assert.assertEquals("Sexo eh obrigatorio", msg);
 
-		driver.quit();
 	}
 	
 	@Test
 	public void deveTestarRegraDoCampoComidaFavorita() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
 		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Arthur");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Conan Doyle");
@@ -77,15 +76,11 @@ public class Desafio2TestandoRegrasDeNegocios {
 		
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", msg);
 
-		driver.quit();
 	}
 	
 	@Test
 	public void deveTestarRegraDoCampoEsportes() {
-		
-		WebDriver driver = new ChromeDriver();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
-		
+
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Arthur");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Conan Doyle");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -102,7 +97,6 @@ public class Desafio2TestandoRegrasDeNegocios {
 		
 		Assert.assertEquals("Voce faz esporte ou nao?", msg);
 
-		driver.quit();
 	}
 
 }

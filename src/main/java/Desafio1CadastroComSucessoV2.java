@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -9,12 +11,22 @@ import org.openqa.selenium.support.ui.Select;
 
 public class Desafio1CadastroComSucessoV2 {
 	
-	@Test
-	public void deveRealizarUmCadastroComSucesso() {
-		
-		WebDriver driver = new ChromeDriver();
+	private WebDriver driver;
+	
+	@Before
+	public void inicilaiza() {
+		driver = new ChromeDriver();
 		driver.manage().window().setSize(new Dimension(600, 334));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	@Test
+	public void deveRealizarUmCadastroComSucesso() {
 				
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Edgar");
 
@@ -53,16 +65,7 @@ public class Desafio1CadastroComSucessoV2 {
 		Assert.assertEquals("especializacao", driver.findElement(By.id("descEscolaridade")).getText());
 		Assert.assertEquals("Karate", driver.findElement(By.id("descEsportes")).getText());
 		*/
-		 	
-				
-		
-		 
-		
-		driver.quit();
-		
-		
+
 	}
-	
-	
 
 }

@@ -5,19 +5,31 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
-
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 public class Desafio1CadastroComSucesso {
 	
-	@Test
-	public void deveRealizarUmCadastroComSucesso() {
-		
-		WebDriver driver = new ChromeDriver();
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa() {
+		driver = new ChromeDriver();
 		driver.manage().window().setSize(new Dimension(600, 334));
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/camp/componentes.html");
-		
-		
+	}
+	
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
+	
+	
+
+	@Test
+	public void deveRealizarUmCadastroComSucesso() {
+
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Edgar");
 		String nome = driver.findElement(By.id("elementosForm:nome")).getAttribute("value");
 		System.out.println(nome);
@@ -53,12 +65,7 @@ public class Desafio1CadastroComSucesso {
 		Assert.assertEquals("Especializacao", selecaoEscolaridade);
 		Assert.assertEquals("Karate", selecaoEsportes);
 		Assert.assertEquals("Cadastrado!", resultadoCadastrar);
-		
-		
-		
-		driver.quit();
-		
-		
+
 	}
 
 }
